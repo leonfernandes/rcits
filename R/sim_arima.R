@@ -6,6 +6,7 @@
 #' @param nsim positive integer. Length of time series to be generated.
 #' @param innov vector of innovations.
 #' @param ... not used.
+#' @return a [tibble][tibble::tibble-package] of class "arima_tbl".
 #' @export
 sim_arima <-
     function(object, ...) {
@@ -16,7 +17,7 @@ sim_arima <-
 #' @export
 sim_arima._Arima_fit_impl <-
     function(object, nsim, innov, ...) {
-        object <- object$fit$models$model_1
+        object <- extract_arima(object)
         sim_arima(object, nsim, innov, ...)
     }
 
@@ -24,33 +25,49 @@ sim_arima._Arima_fit_impl <-
 #' @export
 sim_arima.Arima <-
     function(object, nsim, innov, ...) {
-        model <- object$model
-        len_delta <- length(model$Delta)
-        len_phi <- length(model$phi)
+        object <- extract_arima(object)
+        sim_arima(object, nsim, innov, ...)
+    }
+
+#' @rdname sim_arima
+#' @export
+sim_arima.arima <-
+    function(object, nsim, innov, ...) {
+        sim_arima_impl(object$phi, object$theta, object$delta, nsim, innov, ...)
+    }
+
+sim_arima_impl <-
+    function(phi, theta, delta, nsim, innov, ...) {
+        len_delta <- length(delta)
+        len_phi <- length(phi)
         if (!is.numeric(innov)) rlang::abort("`innov` is not numeric")
-        if (vctrs::vec_size(innov) <= nsim) rlang::abort(
-            "Length of `innov` should be more than `nsim`."
-        )
+        if (vctrs::vec_size(innov) <= nsim) {
+            rlang::abort(
+                "Length of `innov` should be more than `nsim`."
+            )
+        }
         ret <- innov
         # apply Theta
-        if (length(model$theta)) {
+        if (length(theta)) {
             ret <-
-                stats::filter(ret, c(1, model$theta), sides = 1L) |>
+                stats::filter(ret, c(1, theta), sides = 1L) |>
                 stats::na.omit() |>
                 as.numeric()
         }
         # apply Phi
         if (len_phi) {
             ret <-
-                stats::filter(ret, model$phi, method = "recursive") |>
+                stats::filter(ret, phi, method = "recursive") |>
                 as.numeric()
         }
-        # apply Delta
+        # apply delta
         if (len_delta) {
             ret <-
-                stats::filter(ret, model$Delta, method = "recursive") |>
+                stats::filter(ret, delta, method = "recursive") |>
                 as.numeric()
         }
-        ret |>
-            utils::tail(nsim)
+        tibble::tibble(
+            x = utils::tail(ret, nsim), date = Sys.Date() + 1:nsim
+        ) |>
+            tibble::new_tibble("arima_tbl")
     }

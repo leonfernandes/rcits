@@ -4,6 +4,7 @@
 \alias{sim_arima}
 \alias{sim_arima._Arima_fit_impl}
 \alias{sim_arima.Arima}
+\alias{sim_arima.arima}
 \title{Simulate from fitted ARIMA model}
 \usage{
 sim_arima(object, ...)
@@ -11,6 +12,8 @@ sim_arima(object, ...)
 \method{sim_arima}{`_Arima_fit_impl`}(object, nsim, innov, ...)
 
 \method{sim_arima}{Arima}(object, nsim, innov, ...)
+
+\method{sim_arima}{arima}(object, nsim, innov, ...)
 }
 \arguments{
 \item{object}{Arima object}
@@ -20,6 +23,9 @@ sim_arima(object, ...)
 \item{nsim}{positive integer. Length of time series to be generated.}
 
 \item{innov}{vector of innovations.}
+}
+\value{
+a \link[tibble:tibble-package]{tibble} of class "arima_tbl".
 }
 \description{
 The innovations \code{innov} are assumed to include the burn-in phase. Only the

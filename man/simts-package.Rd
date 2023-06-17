@@ -6,7 +6,7 @@
 \alias{simts-package}
 \title{simts: Simulate Time Series}
 \description{
-Simulates data from various time series models.
+Simulates data from various time series models. Also includes helper functions to specify as well as extract underlying model parameters from fitted objects.
 }
 \seealso{
 Useful links:

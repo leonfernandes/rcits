@@ -1,10 +1,12 @@
 Package: simts
 Title: Simulate Time Series
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Authors@R: 
     person("Leon", "Fernandes", , "leon.fernandes@columbia.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7192-9939"))
-Description: Simulates data from various time series models.
+Description: Simulates data from various time series models. Also includes
+        helper functions to specify as well as extract underlying model
+        parameters from fitted objects.
 License: MIT + file LICENSE
 URL: https://github.com/leonfernandes/simts
 BugReports: https://github.com/leonfernandes/simts/issues
@@ -18,4 +20,5 @@ RoxygenNote: 7.2.3
 Imports: 
     lifecycle,
     rlang (>= 1.1.1),
+    tibble,
     vctrs (>= 0.6.2)
