@@ -47,14 +47,14 @@ sim_arima_impl <-
             )
         }
         ret <- innov
-        # apply Theta
+        # apply theta
         if (length(theta)) {
             ret <-
                 stats::filter(ret, c(1, theta), sides = 1L) |>
                 stats::na.omit() |>
                 as.numeric()
         }
-        # apply Phi
+        # apply phi
         if (len_phi) {
             ret <-
                 stats::filter(ret, phi, method = "recursive") |>
