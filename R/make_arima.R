@@ -4,7 +4,7 @@
 #' @param delta vector of differencing coefficients, so an ARMA model is fitted
 #'      to `y[t] - delta[1]*y[t-1] - ...`.
 #' @export
-arima <-
+make_arima <-
     function(phi, theta, delta) {
         ret <- stats::makeARIMA(phi = phi, theta = theta, Delta = delta)
         class(ret) <- "arima"
