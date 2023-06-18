@@ -1,4 +1,5 @@
 #' @keywords internal
+#' @aliases simts-package
 "_PACKAGE"
 
 ## usethis namespace: start

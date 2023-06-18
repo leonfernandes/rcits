@@ -2,8 +2,8 @@
 % Please edit documentation in R/simts-package.R
 \docType{package}
 \name{simts-package}
-\alias{simts}
 \alias{simts-package}
+\alias{_PACKAGE}
 \title{simts: Simulate Time Series}
 \description{
 Simulates data from various time series models. Also includes helper functions to specify as well as extract underlying model parameters from fitted objects.

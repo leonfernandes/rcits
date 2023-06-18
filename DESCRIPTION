@@ -1,6 +1,6 @@
 Package: simts
 Title: Simulate Time Series
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: 
     person("Leon", "Fernandes", , "leon.fernandes@columbia.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7192-9939"))
@@ -12,6 +12,7 @@ URL: https://github.com/leonfernandes/simts
 BugReports: https://github.com/leonfernandes/simts/issues
 Suggests: 
     covr,
+    modeltime (>= 1.2.6),
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
