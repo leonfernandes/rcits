@@ -11,6 +11,7 @@
 #' tail are used for the simulation.
 #' The implementation is based on `fGarch::garchSim`.
 #' @param object A `garch` object.
+#' @param nsim positive integer. Number of simulations.
 #' @param innov numeric vector of innovations.
 #' @param init_garch numeric vector of starting values for garch process
 #'      used only for burn-in period.
@@ -24,11 +25,12 @@
 #' @rdname simts_garch
 #' @export
 simts.garch <-
-    function(object, innov, init_garch, init_sigma2, ...) {
+    function(object, nsim, innov, init_garch, init_sigma2, ...) {
         simts_garch_impl(
             omega = object$omega,
             alpha = object$alpha,
             beta = object$beta,
+            nsim = nsim,
             innov = innov,
             init_garch = init_garch,
             init_sigma2 = init_sigma2

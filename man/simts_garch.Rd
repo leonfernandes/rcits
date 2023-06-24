@@ -4,10 +4,12 @@
 \alias{simts.garch}
 \title{Custom simulation of univariate GARCH model}
 \usage{
-\method{simts}{garch}(object, innov, init_garch, init_sigma2, ...)
+\method{simts}{garch}(object, nsim, innov, init_garch, init_sigma2, ...)
 }
 \arguments{
 \item{object}{A \code{garch} object.}
+
+\item{nsim}{positive integer. Number of simulations.}
 
 \item{innov}{numeric vector of innovations.}
 
