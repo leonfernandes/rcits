@@ -2,11 +2,14 @@
 #'
 #' The innovations `innov` are assumed to include the burn-in phase. Only the
 #' last `nsim` simulations are returned.
-#' @param object Arima object
+#' The implementation is based on `stats::arima.sim`.
+#' @param object either `arima`, `Arima` or `_Arima_fit_impl` object.
 #' @param nsim positive integer. Length of time series to be generated.
 #' @param innov vector of innovations.
 #' @param ... not used.
-#' @return a [tibble][tibble::tibble-package] of class "arima_tbl".
+#' @return a [tibble][tibble::tibble-package] of class "arima_tbl". Column "x"
+#'      corresponds to the simulated time series and column "date" has dummy
+#'      dates for each observation.
 #' @rdname simts_arima
 #' @export
 simts.arima <-

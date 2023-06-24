@@ -13,7 +13,7 @@
 \method{simts}{Arima}(object, nsim, innov, ...)
 }
 \arguments{
-\item{object}{Arima object}
+\item{object}{either \code{arima}, \code{Arima} or \verb{_Arima_fit_impl} object.}
 
 \item{nsim}{positive integer. Length of time series to be generated.}
 
@@ -22,9 +22,12 @@
 \item{...}{not used.}
 }
 \value{
-a \link[tibble:tibble-package]{tibble} of class "arima_tbl".
+a \link[tibble:tibble-package]{tibble} of class "arima_tbl". Column "x"
+corresponds to the simulated time series and column "date" has dummy
+dates for each observation.
 }
 \description{
 The innovations \code{innov} are assumed to include the burn-in phase. Only the
 last \code{nsim} simulations are returned.
+The implementation is based on \code{stats::arima.sim}.
 }
