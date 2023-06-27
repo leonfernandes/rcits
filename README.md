@@ -15,7 +15,8 @@ status](http://www.bioconductor.org/shields/build/release/bioc/simts.svg)](https
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of simts is to …
+The goal of simts is to simulate time series from various time series
+models.
 
 ## Installation
 
