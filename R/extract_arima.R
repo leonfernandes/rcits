@@ -14,7 +14,15 @@ extract_arima <-
 #' @export
 extract_arima._Arima_fit_impl <-
     function(object, ...) {
-        object <- object$fit$models$model_1
+        object <- object$fit
+        extract_arima(object, ...)
+    }
+
+#' @rdname extract_arima
+#' @export
+extract_arima.Arima_fit_impl <-
+    function(object, ...) {
+        object <- object$models$model_1
         extract_arima(object, ...)
     }
 

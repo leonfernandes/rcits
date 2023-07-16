@@ -22,8 +22,8 @@ used only for burn-in period.}
 \item{...}{Not used.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} of class "garch_tbl". Column "x"
-corresponds to the simulated time series, "sigma2" contains the
+A \link[tsibble:tsibble-package]{tsibble} of class "garch_ts". Column
+"value" corresponds to the simulated time series, "sigma2" contains the
 simulated variance time series and column "date" has dummy dates per
 observation.
 }
@@ -38,4 +38,15 @@ is \eqn{m}, where \eqn{m} is the minimum lengths oamong \code{init_garch} and
 \eqn{m}. Note that only the minimal required number of terms, counted from the
 tail are used for the simulation.
 The implementation is based on \code{fGarch::garchSim}.
+}
+\examples{
+# simulate from a GARCH(1, 1) model
+mdl <- make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
+simts(
+     mdl,
+     nsim = 100,
+     innov = rnorm(200),
+     init_garch = numeric(2),
+     init_sigma = c(1, 1)
+)
 }

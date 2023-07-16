@@ -3,12 +3,15 @@
 \name{simts.arima}
 \alias{simts.arima}
 \alias{simts._Arima_fit_impl}
+\alias{simts.Arima_fit_impl}
 \alias{simts.Arima}
 \title{Simulate from arima models}
 \usage{
 \method{simts}{arima}(object, nsim, innov, ...)
 
 \method{simts}{`_Arima_fit_impl`}(object, nsim, innov, ...)
+
+\method{simts}{Arima_fit_impl}(object, nsim, innov, ...)
 
 \method{simts}{Arima}(object, nsim, innov, ...)
 }
@@ -22,12 +25,17 @@
 \item{...}{not used.}
 }
 \value{
-a \link[tibble:tibble-package]{tibble} of class "arima_tbl". Column "x"
-corresponds to the simulated time series and column "date" has dummy
-dates for each observation.
+a \link[tsibble:tsibble-package]{tsibble} of class "arima_ts". Column
+"value" corresponds to the simulated time series and column "date" has
+dummy dates for each observation.
 }
 \description{
 The innovations \code{innov} are assumed to include the burn-in phase. Only the
 last \code{nsim} simulations are returned.
 The implementation is based on \code{stats::arima.sim}.
+}
+\examples{
+# simulate from an AR(1) model
+mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
+simts(mdl, nsim = 100, innov = rnorm(200))
 }

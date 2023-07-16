@@ -18,12 +18,22 @@
 #' @param init_sigma2 numeric vector of starting values for variance process
 #'      used only for burn-in period.
 #' @param ... Not used.
-#' @return A [tibble][tibble::tibble-package] of class "garch_tbl". Column "x"
-#'      corresponds to the simulated time series, "sigma2" contains the
+#' @return A [tsibble][tsibble::tsibble-package] of class "garch_ts". Column
+#'      "value" corresponds to the simulated time series, "sigma2" contains the
 #'      simulated variance time series and column "date" has dummy dates per
 #'      observation.
 #' @rdname simts_garch
 #' @export
+#' @examples
+#' # simulate from a GARCH(1, 1) model
+#' mdl <- make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
+#' simts(
+#'      mdl,
+#'      nsim = 100,
+#'      innov = rnorm(200),
+#'      init_garch = numeric(2),
+#'      init_sigma = c(1, 1)
+#' )
 simts.garch <-
     function(object, nsim, innov, init_garch, init_sigma2, ...) {
         simts_garch_impl(
@@ -96,11 +106,12 @@ simts_garch_impl <-
         }
         # attr(ret, "eps") <- eps
         ret <-
-            tibble::tibble(
-                x = utils::tail(y, nsim),
+            tsibble::tsibble(
+                date = Sys.Date() + 1:nsim,
+                value = utils::tail(y, nsim),
                 sigma2 = utils::tail(h, nsim),
-                date = Sys.Date() + 1:nsim
+                index = date
             ) |>
-            tibble::new_tibble("garch_tbl")
+            tsibble::new_tsibble("garch_ts")
         ret
     }

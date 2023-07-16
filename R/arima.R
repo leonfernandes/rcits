@@ -7,11 +7,15 @@
 #' @param nsim positive integer. Length of time series to be generated.
 #' @param innov vector of innovations.
 #' @param ... not used.
-#' @return a [tibble][tibble::tibble-package] of class "arima_tbl". Column "x"
-#'      corresponds to the simulated time series and column "date" has dummy
-#'      dates for each observation.
+#' @return a [tsibble][tsibble::tsibble-package] of class "arima_ts". Column
+#'      "value" corresponds to the simulated time series and column "date" has
+#'      dummy dates for each observation.
 #' @rdname simts_arima
 #' @export
+#' @examples
+#' # simulate from an AR(1) model
+#' mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
+#' simts(mdl, nsim = 100, innov = rnorm(200))
 simts.arima <-
     function(object, nsim, innov, ...) {
         simts_arima_impl(
@@ -22,6 +26,14 @@ simts.arima <-
 #' @rdname simts_arima
 #' @export
 simts._Arima_fit_impl <-
+    function(object, nsim, innov, ...) {
+        object <- extract_arima(object)
+        simts(object, nsim, innov, ...)
+    }
+
+#' @rdname simts_arima
+#' @export
+simts.Arima_fit_impl <-
     function(object, nsim, innov, ...) {
         object <- extract_arima(object)
         simts(object, nsim, innov, ...)
@@ -65,8 +77,10 @@ simts_arima_impl <-
                 stats::filter(ret, delta, method = "recursive") |>
                 as.numeric()
         }
-        tibble::tibble(
-            x = utils::tail(ret, nsim), date = Sys.Date() + 1:nsim
+        tsibble::tsibble(
+            date = Sys.Date() + 1:nsim,
+            value = utils::tail(ret, nsim),
+            index = date
         ) |>
-            tibble::new_tibble("arima_tbl")
+            tsibble::new_tsibble("arima_ts")
     }

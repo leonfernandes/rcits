@@ -3,12 +3,15 @@
 \name{extract_arima}
 \alias{extract_arima}
 \alias{extract_arima._Arima_fit_impl}
+\alias{extract_arima.Arima_fit_impl}
 \alias{extract_arima.Arima}
 \title{Extract arima object}
 \usage{
 extract_arima(object, ...)
 
 \method{extract_arima}{`_Arima_fit_impl`}(object, ...)
+
+\method{extract_arima}{Arima_fit_impl}(object, ...)
 
 \method{extract_arima}{Arima}(object, ...)
 }
