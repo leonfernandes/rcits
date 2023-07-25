@@ -6,7 +6,7 @@
 \alias{_PACKAGE}
 \title{simts: Simulate Time Series}
 \description{
-Simulates data from various time series models. Also includes helper functions to specify as well as extract underlying model parameters from fitted objects.
+Simulates data from arima and garch models.
 }
 \seealso{
 Useful links:

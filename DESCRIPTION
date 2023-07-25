@@ -1,27 +1,25 @@
 Package: simts
 Title: Simulate Time Series
-Version: 0.0.1.9000
+Version: 0.0.2
 Authors@R: 
     person("Leon", "Fernandes", , "leon.fernandes@columbia.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7192-9939"))
-Description: Simulates data from various time series models. Also includes
-        helper functions to specify as well as extract underlying model
-        parameters from fitted objects.
+Description: Simulates data from arima and garch models.
 License: MIT + file LICENSE
 URL: https://github.com/leonfernandes/simts
 BugReports: https://github.com/leonfernandes/simts/issues
 Suggests: 
     covr,
-    modeltime (>= 1.2.6),
+    fGarch (>= 4022.89),
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Imports: 
-    fGarch (>= 4022.89),
+Imports:
+    glue (>= 1.6.2),
     lifecycle,
     rlang (>= 1.1.1),
-    tibble,
+    smpspltools (>= 0.0.1),
     tsibble (>= 1.1.3),
     vctrs (>= 0.6.2)

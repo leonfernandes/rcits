@@ -2,18 +2,9 @@
 % Please edit documentation in R/arima.R
 \name{simts.arima}
 \alias{simts.arima}
-\alias{simts._Arima_fit_impl}
-\alias{simts.Arima_fit_impl}
-\alias{simts.Arima}
 \title{Simulate from arima models}
 \usage{
 \method{simts}{arima}(object, nsim, innov, ...)
-
-\method{simts}{`_Arima_fit_impl`}(object, nsim, innov, ...)
-
-\method{simts}{Arima_fit_impl}(object, nsim, innov, ...)
-
-\method{simts}{Arima}(object, nsim, innov, ...)
 }
 \arguments{
 \item{object}{either \code{arima}, \code{Arima} or \verb{_Arima_fit_impl} object.}
@@ -36,6 +27,6 @@ The implementation is based on \code{stats::arima.sim}.
 }
 \examples{
 # simulate from an AR(1) model
-mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
+mdl <- smpspltools::make_arima(phi = 0.3, theta = 0, delta = 0)
 simts(mdl, nsim = 100, innov = rnorm(200))
 }

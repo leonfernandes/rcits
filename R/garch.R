@@ -26,29 +26,19 @@
 #' @export
 #' @examples
 #' # simulate from a GARCH(1, 1) model
-#' mdl <- make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
+#' mdl <- smpspltools::make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
 #' simts(
 #'      mdl,
 #'      nsim = 100,
 #'      innov = rnorm(200),
-#'      init_garch = numeric(2),
+#'      init_garch = c(0, 0),
 #'      init_sigma = c(1, 1)
 #' )
 simts.garch <-
     function(object, nsim, innov, init_garch, init_sigma2, ...) {
-        simts_garch_impl(
-            omega = object$omega,
-            alpha = object$alpha,
-            beta = object$beta,
-            nsim = nsim,
-            innov = innov,
-            init_garch = init_garch,
-            init_sigma2 = init_sigma2
-        )
-    }
-
-simts_garch_impl <-
-    function(omega, alpha, beta, nsim, innov, init_garch, init_sigma2, ...) {
+        omega <- object$omega
+        alpha <- object$alpha
+        beta <- object$beta
         # Set defaults for GARCH
         delta <- 2
         # mu <- ar <- ma <- 0

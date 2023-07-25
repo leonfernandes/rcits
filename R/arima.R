@@ -14,41 +14,13 @@
 #' @export
 #' @examples
 #' # simulate from an AR(1) model
-#' mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
+#' mdl <- smpspltools::make_arima(phi = 0.3, theta = 0, delta = 0)
 #' simts(mdl, nsim = 100, innov = rnorm(200))
 simts.arima <-
     function(object, nsim, innov, ...) {
-        simts_arima_impl(
-            object$phi, object$theta, object$delta, nsim, innov, ...
-        )
-    }
-
-#' @rdname simts_arima
-#' @export
-simts._Arima_fit_impl <-
-    function(object, nsim, innov, ...) {
-        object <- extract_arima(object)
-        simts(object, nsim, innov, ...)
-    }
-
-#' @rdname simts_arima
-#' @export
-simts.Arima_fit_impl <-
-    function(object, nsim, innov, ...) {
-        object <- extract_arima(object)
-        simts(object, nsim, innov, ...)
-    }
-
-#' @rdname simts_arima
-#' @export
-simts.Arima <-
-    function(object, nsim, innov, ...) {
-        object <- extract_arima(object)
-        simts(object, nsim, innov, ...)
-    }
-
-simts_arima_impl <-
-    function(phi, theta, delta, nsim, innov, ...) {
+        phi <- object$phi
+        theta <- object$theta
+        delta <- object$delta
         len_delta <- length(delta)
         len_phi <- length(phi)
         if (!is.numeric(innov)) rlang::abort("`innov` is not numeric")

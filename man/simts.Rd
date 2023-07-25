@@ -8,8 +8,7 @@ simts(object, ...)
 }
 \arguments{
 \item{object}{model from which to simulate. Currently supports objects of
-class \code{arima} and \code{garch}. Also allowed are fitted models from
-\code{stats::arima} and \code{modeltime::arima_reg} for \code{arima} class.}
+class \code{arima} and \code{garch}.}
 
 \item{...}{not used.}
 }
