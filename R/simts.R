@@ -12,7 +12,7 @@ simts <-
 simts.default <-
     function(object, ...) {
         object <- smpspltools::extract_model(object)
-        if (!inherits(object, "arima") && !inherits(object, "garch")) {
+        if (!smpspltools::is_smpspl_reg(object)) {
             rlang::abort(
                 glue::glue("Object of class {class(object)} is not registered.")
             )
