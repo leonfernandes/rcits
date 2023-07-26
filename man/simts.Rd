@@ -2,9 +2,12 @@
 % Please edit documentation in R/simts.R
 \name{simts}
 \alias{simts}
+\alias{simts.default}
 \title{Simulate from registered models}
 \usage{
 simts(object, ...)
+
+\method{simts}{default}(object, ...)
 }
 \arguments{
 \item{object}{model from which to simulate. Currently supports objects of

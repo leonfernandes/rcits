@@ -9,6 +9,8 @@ simts <-
         UseMethod("simts")
     }
 
+#' @rdname simts
+#' @export
 simts.default <-
     function(object, ...) {
         object <- smpspltools::extract_model(object)
