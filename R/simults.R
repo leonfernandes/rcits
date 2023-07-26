@@ -4,14 +4,14 @@
 #'      class `arima` and `garch`.
 #' @param ... not used.
 #' @export
-simts <-
+simults <-
     function(object, ...) {
-        UseMethod("simts")
+        UseMethod("simults")
     }
 
-#' @rdname simts
+#' @rdname simults
 #' @export
-simts.default <-
+simults.default <-
     function(object, ...) {
         object <- smpspltools::extract_model(object)
         if (!smpspltools::is_smpspl_reg(object)) {
@@ -19,5 +19,5 @@ simts.default <-
                 glue::glue("Object of class {class(object)} is not registered.")
             )
         }
-        simts(object, ...)
+        simults(object, ...)
     }

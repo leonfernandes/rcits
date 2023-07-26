@@ -13,21 +13,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-# simts
+# simults
 
 <!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/leonfernandes/simts/branch/master/graph/badge.svg)](https://app.codecov.io/gh/leonfernandes/simts?branch=master)
-[![CRAN status](https://www.r-pkg.org/badges/version/simts)](https://CRAN.R-project.org/package=simts)
-[![BioC status](http://www.bioconductor.org/shields/build/release/bioc/simts.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/simts)
+[![Codecov test coverage](https://codecov.io/gh/leonfernandes/simults/branch/master/graph/badge.svg)](https://app.codecov.io/gh/leonfernandes/simults?branch=master)
+[![CRAN status](https://www.r-pkg.org/badges/version/simults)](https://CRAN.R-project.org/package=simults)
+[![BioC status](http://www.bioconductor.org/shields/build/release/bioc/simults.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/simults)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of simts is to simulate time series from various time series models.
+The goal of simults is to simulate time series from various time series models.
 
 ## Installation
 
-You can install the development version of simts like so:
+You can install the development version of simults like so:
 
 ``` r
-pak::pkg_install("leonfernandes/simts")
+pak::pkg_install("leonfernandes/simults")
 ```

@@ -22,19 +22,19 @@
 #'      "value" corresponds to the simulated time series, "sigma2" contains the
 #'      simulated variance time series and column "date" has dummy dates per
 #'      observation.
-#' @rdname simts_garch
+#' @rdname simults_garch
 #' @export
 #' @examples
 #' # simulate from a GARCH(1, 1) model
 #' mdl <- smpspltools::make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
-#' simts(
+#' simults(
 #'      mdl,
 #'      nsim = 100,
 #'      innov = rnorm(200),
 #'      init_garch = c(0, 0),
 #'      init_sigma = c(1, 1)
 #' )
-simts.garch <-
+simults.garch <-
     function(object, nsim, innov, init_garch, init_sigma2, ...) {
         omega <- object$omega
         alpha <- object$alpha

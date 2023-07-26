@@ -1,4 +1,4 @@
-Package: simts
+Package: simults
 Title: Simulate Time Series
 Version: 0.0.2.9001
 Authors@R: 
@@ -6,8 +6,8 @@ Authors@R:
            comment = c(ORCID = "0000-0002-7192-9939"))
 Description: Simulates data from arima and garch models.
 License: MIT + file LICENSE
-URL: https://github.com/leonfernandes/simts
-BugReports: https://github.com/leonfernandes/simts/issues
+URL: https://github.com/leonfernandes/simults
+BugReports: https://github.com/leonfernandes/simults/issues
 Suggests: 
     covr,
     fGarch (>= 4022.89),

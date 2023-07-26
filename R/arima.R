@@ -10,13 +10,13 @@
 #' @return a [tsibble][tsibble::tsibble-package] of class "arima_ts". Column
 #'      "value" corresponds to the simulated time series and column "date" has
 #'      dummy dates for each observation.
-#' @rdname simts_arima
+#' @rdname simults_arima
 #' @export
 #' @examples
 #' # simulate from an AR(1) model
 #' mdl <- smpspltools::make_arima(phi = 0.3, theta = 0, delta = 0)
-#' simts(mdl, nsim = 100, innov = rnorm(200))
-simts.arima <-
+#' simults(mdl, nsim = 100, innov = rnorm(200))
+simults.arima <-
     function(object, nsim, innov, ...) {
         phi <- object$phi
         theta <- object$theta

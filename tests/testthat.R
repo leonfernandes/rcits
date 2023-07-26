@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(simts)
+library(simults)
 
-test_check("simts")
+test_check("simults")
