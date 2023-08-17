@@ -32,7 +32,7 @@
 #'      nsim = 100,
 #'      innov = rnorm(200),
 #'      init_garch = c(0, 0),
-#'      init_sigma = c(1, 1)
+#'      init_sigma2 = c(1, 1)
 #' )
 simults.garch <-
     function(object, nsim, innov, init_garch, init_sigma2, ...) {
