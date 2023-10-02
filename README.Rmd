@@ -31,3 +31,16 @@ You can install the development version of simults like so:
 ``` r
 pak::pkg_install("leonfernandes/simults")
 ```
+
+## Simulate Data
+
+Currently this package supports ARIMA and GARCH time series models from the *smpspltools* package.
+Burn-in is done implicitly where sufficient innovations are assumed to be supplied.
+
+```{r demo}
+library(simults)
+library(smpspltools)
+# simulate from an AR(1) model
+mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
+simults(mdl, nsim = 100, innov = rnorm(200))
+```
