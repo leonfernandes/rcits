@@ -3,5 +3,7 @@
 S3method(simults,arima)
 S3method(simults,default)
 S3method(simults,garch)
+export(make_arima)
+export(make_garch)
 export(simults)
 importFrom(lifecycle,deprecated)

@@ -41,7 +41,7 @@ The implementation is based on \code{fGarch::garchSim}.
 }
 \examples{
 # simulate from a GARCH(1, 1) model
-mdl <- smpspltools::make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
+mdl <- make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
 simults(
      mdl,
      nsim = 100,

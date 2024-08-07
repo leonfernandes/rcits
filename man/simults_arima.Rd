@@ -27,6 +27,6 @@ The implementation is based on \code{stats::arima.sim}.
 }
 \examples{
 # simulate from an AR(1) model
-mdl <- smpspltools::make_arima(phi = 0.3, theta = 0, delta = 0)
+mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
 simults(mdl, nsim = 100, innov = rnorm(200))
 }

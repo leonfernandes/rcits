@@ -1,3 +1,22 @@
+#' Constructor for garch object
+#'
+#' @param omega numeric constant coefficient of the variance equation.
+#' @param alpha numeric vector of autoregressive coefficients.
+#' @param beta numeric vector of variance coefficients.
+#' @export
+make_garch <-
+    function(omega, alpha, beta) {
+        if (!length(alpha)) {
+            alpha <- 0
+        }
+        if (!length(beta)) {
+            beta <- 0
+        }
+        ret <- list(omega = omega, alpha = alpha, beta = beta)
+        class(ret) <- "garch"
+        ret
+    }
+
 #' Custom simulation of univariate GARCH model
 #'
 #' Simulates a univariate time series according to \eqn{X_t  = \sigma_t Z_t},
@@ -26,7 +45,7 @@
 #' @export
 #' @examples
 #' # simulate from a GARCH(1, 1) model
-#' mdl <- smpspltools::make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
+#' mdl <- make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
 #' simults(
 #'      mdl,
 #'      nsim = 100,

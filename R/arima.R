@@ -1,3 +1,16 @@
+#' Constructor for arima object
+#'
+#' @inheritParams stats::makeARIMA
+#' @param delta vector of differencing coefficients, so an ARMA model is fitted
+#'      to `y[t] - delta[1]*y[t-1] - ...`.
+#' @export
+make_arima <-
+    function(phi, theta, delta) {
+        ret <- stats::makeARIMA(phi = phi, theta = theta, Delta = delta)
+        class(ret) <- "arima"
+        ret
+    }
+
 #' Simulate from arima models
 #'
 #' The innovations `innov` are assumed to include the burn-in phase. Only the
@@ -14,7 +27,7 @@
 #' @export
 #' @examples
 #' # simulate from an AR(1) model
-#' mdl <- smpspltools::make_arima(phi = 0.3, theta = 0, delta = 0)
+#' mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
 #' simults(mdl, nsim = 100, innov = rnorm(200))
 simults.arima <-
     function(object, nsim, innov, ...) {
