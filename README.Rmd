@@ -18,7 +18,11 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of simults is to simulate time series from various time series models.
+The goal of this package, given a causal and invertible time series model, is two-fold: (i) given innovations, simulate observations via `simults`, (ii) given observations, return innovations via `fitted_resid`.
+The first is natural in simulating time series.
+The second is useful for getting fitted residuals where the parameter could have been estimated on a different dataset compared to the dataset on which residuals are computed on.
+
+This package implements the two methods for ARIMA and GARCH models.
 
 ## Installation
 
@@ -30,17 +34,30 @@ pak::pkg_install("leonfernandes/simults")
 
 ## Simulate Data
 
-We demonstrate how to simulate an AR(1) below.
+We demonstrate the steps to simulate an AR(1) below.
 
 ```{r sim-ar1}
 library(simults)
 
 mdl <- make_arima(phi=0.3, theta=0, delta=0)
-x <- simults(mdl, nsim=100, innov=rnorm(200))
+z <- rnorm(200)
+x <- simults(mdl, nsim=100, innov=z)
 plot(x, type='l', main="Simulated AR(1)")
 ```
-Currently this package supports ARIMA and GARCH time series models from the *smpspltools* package.
-Burn-in is done implicitly where sufficient innovations are assumed to be supplied.
+
+Note the difference in lengths of `z` and `x`.
+The burn-in phase is performed implicitly: all the values of `z` have been used in the recursions for the AR(1) but only the last 100 observations are returned to `x`.
+
+## Exact Residuals
+
+If we apply `fitted_resid` using the true model parameters, we should recover the original innovations.
+This is verified below.
+
+```{r fitted_resid}
+z0 <- fitted_resid(mdl, x) # Exact residuals
+print(tail(z))
+print(tail(z0$.resid))
+```
 
 ## Fitted Residuals
 
@@ -48,6 +65,7 @@ Fit an AR(1) model on first half of the data and compute residuals on all the da
 ```{r fitted-plot}
 phi_hat <- stats::ar(x$value[1:50], order.max=1)$ar
 fit_mdl <- make_arima(phi=phi_hat, theta=0, delta=0)
-z <- fitted_resid(fit_mdl, x)
-plot(z, type='l', main="Fitted residuals from AR(1)")
+z_hat <- fitted_resid(fit_mdl, x)
+print(tail(z_hat$.resid))
+plot(z_hat, type='l', main="Fitted residuals from AR(1)")
 ```
