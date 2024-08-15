@@ -7,7 +7,7 @@
 \method{simults}{arima}(object, nsim, innov, ...)
 }
 \arguments{
-\item{object}{either \code{arima}, \code{Arima} or \verb{_Arima_fit_impl} object.}
+\item{object}{a fitted arima model}
 
 \item{nsim}{positive integer. Length of time series to be generated.}
 

@@ -3,11 +3,10 @@
 \docType{package}
 \name{simults-package}
 \alias{simults-package}
-\alias{_PACKAGE}
 \alias{simts-package}
 \title{simults: Simulate Time Series}
 \description{
-Simulates data from arima and garch models.
+Simulates data from arima and garch models and calculate fitted residuals.
 }
 \seealso{
 Useful links:

@@ -9,9 +9,9 @@
 \arguments{
 \item{object}{A \code{garch} object.}
 
-\item{nsim}{positive integer. Number of simulations.}
+\item{nsim}{positive integer. Length of time series to be generated.}
 
-\item{innov}{numeric vector of innovations.}
+\item{innov}{vector of innovations.}
 
 \item{init_garch}{numeric vector of starting values for garch process
 used only for burn-in period.}
@@ -19,13 +19,12 @@ used only for burn-in period.}
 \item{init_sigma2}{numeric vector of starting values for variance process
 used only for burn-in period.}
 
-\item{...}{Not used.}
+\item{...}{not used.}
 }
 \value{
 A \link[tsibble:tsibble-package]{tsibble} of class "garch_ts". Column
-"value" corresponds to the simulated time series, "sigma2" contains the
-simulated variance time series and column "date" has dummy dates per
-observation.
+"value" corresponds to the simulated time series, "sigma2" and column
+"date" has dummy dates for each observation.
 }
 \description{
 Simulates a univariate time series according to \eqn{X_t  = \sigma_t Z_t},
