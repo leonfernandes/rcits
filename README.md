@@ -5,14 +5,6 @@
 
 <!-- badges: start -->
 
-[![Codecov test
-coverage](https://codecov.io/gh/leonfernandes/simults/branch/master/graph/badge.svg)](https://app.codecov.io/gh/leonfernandes/simults?branch=master)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/simults)](https://CRAN.R-project.org/package=simults)
-[![BioC
-status](http://www.bioconductor.org/shields/build/release/bioc/simults.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/simults)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of simults is to simulate time series from various time series
@@ -32,7 +24,7 @@ We demonstrate how to simulate an AR(1) below.
 
 ``` r
 library(simults)
-# simulate from an AR(1) model
+
 mdl <- make_arima(phi=0.3, theta=0, delta=0)
 x <- simults(mdl, nsim=100, innov=rnorm(200))
 plot(x, type='l', main="Simulated AR(1)")
