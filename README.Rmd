@@ -13,12 +13,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-# simults
+# rcits
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of this package, given a causal and invertible time series model, is two-fold: (i) given innovations, simulate observations via `simults`, (ii) given observations, return innovations via `fitted_resid`.
+The goal of this package, given a causal and invertible time series model, is two-fold: (i) given innovations, simulate observations via `inn2ts`, (ii) given observations, return innovations via `ts2inn`.
 The first is natural in simulating time series.
 The second is useful for getting fitted residuals where the parameter could have been estimated on a different dataset compared to the dataset on which residuals are computed on.
 
@@ -29,7 +29,7 @@ This package implements the two methods for ARIMA and GARCH models.
 You can install the development version of simults like so:
 
 ``` r
-pak::pkg_install("leonfernandes/simults")
+pak::pkg_install("leonfernandes/rcits")
 ```
 
 ## Simulate Data
@@ -37,35 +37,33 @@ pak::pkg_install("leonfernandes/simults")
 We demonstrate the steps to simulate an AR(1) below.
 
 ```{r sim-ar1}
-library(simults)
+library(rcits)
 
 mdl <- make_arima(phi=0.3, theta=0, delta=0)
 z <- rnorm(200)
-x <- simults(mdl, nsim=100, innov=z)
+x <- inn2ts(mdl, inn=z)
 plot(x, type='l', main="Simulated AR(1)")
 ```
 
-Note the difference in lengths of `z` and `x`.
-The burn-in phase is performed implicitly: all the values of `z` have been used in the recursions for the AR(1) but only the last 100 observations are returned to `x`.
-
 ## Exact Residuals
 
-If we apply `fitted_resid` using the true model parameters, we should recover the original innovations.
+If we apply `obs2inn` using the true model parameters, we should recover the original innovations.
 This is verified below.
 
 ```{r fitted_resid}
-z0 <- fitted_resid(mdl, x) # Exact residuals
+z0 <- ts2inn(mdl, x) # Exact residuals
 print(tail(z))
-print(tail(z0$.resid))
+print(tail(z0$inn))
 ```
 
 ## Fitted Residuals
 
 Fit an AR(1) model on first half of the data and compute residuals on all the data.
+
 ```{r fitted-plot}
-phi_hat <- stats::ar(x$value[1:50], order.max=1)$ar
+phi_hat <- stats::ar(x$ts[1:50], order.max=1)$ar
 fit_mdl <- make_arima(phi=phi_hat, theta=0, delta=0)
-z_hat <- fitted_resid(fit_mdl, x)
-print(tail(z_hat$.resid))
+z_hat <- ts2inn(fit_mdl, x)
+print(tail(z_hat$inn))
 plot(z_hat, type='l', main="Fitted residuals from AR(1)")
 ```

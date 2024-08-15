@@ -5,4 +5,4 @@
 ^\.github$
 README.md
 README.html
-$\.docs$
+^docs$

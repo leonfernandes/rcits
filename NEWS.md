@@ -1,4 +1,10 @@
-# simults (development version)
+# rcits (development version)
+
+## v 0.0.5
+
+* Rename package to `rcits` from `simults`
+* Rename `simults` to `inn2ts`
+* Rename `fitted_resid` to `ts2inn`
 
 ## v 0.0.4.9000
 

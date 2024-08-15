@@ -1,5 +1,5 @@
 #' @keywords internal
-#' @aliases simts-package
+#' @aliases rcits-package
 "_PACKAGE"
 
 ## usethis namespace: start

@@ -1,13 +1,14 @@
-Package: simults
-Title: Simulate Time Series
-Version: 0.0.4.9000
+Package: rcits
+Title: Recursions for Causal Invertible Time Series
+Version: 0.0.5
 Authors@R: 
     person("Leon", "Fernandes", , "leon.fernandes@columbia.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7192-9939"))
-Description: Simulates data from arima and garch models and calculate fitted residuals. 
+Description: Given a causal and invertible time series, simulates time series
+    observations given innovations or vice-versa.
 License: MIT + file LICENSE
-URL: https://github.com/leonfernandes/simults
-BugReports: https://github.com/leonfernandes/simults/issues
+URL: https://github.com/leonfernandes/rcits
+BugReports: https://github.com/leonfernandes/rcits/issues
 Suggests: 
     covr,
     fGarch (>= 4022.89),

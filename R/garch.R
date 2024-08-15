@@ -16,41 +16,27 @@ make_garch <- function(omega, alpha, beta) {
     ret
 }
 
-#' Custom simulation of univariate GARCH model
+#' Custom simulation of univariate GARCH(1,1) model
 #'
 #' Simulates a univariate time series according to \eqn{X_t  = \sigma_t Z_t},
-#' where \eqn{\sigma_t} follows the recusrion
+#' where \eqn{\sigma_t} follows the recursion
 #' \deqn{\sigma_{t|t-1} = \sum_{j=1}^p \beta_j \sigma_{t-j|t-j-1}+ \alpha_0+\sum_{j=1}^q \alpha_j X_{t-i}^2.}
-#' It is assumed that sufficient terms for burn-in period are provided in
-#' `innov`, `init_garch` and `init_sigma2`. The number of terms used for burn-in
-#' is \eqn{m}, where \eqn{m} is the minimum lengths oamong `init_garch` and
-#' `init_sigma2`. In this case `innov` is assumed to have at least `nsim` +
-#' \eqn{m}. Note that only the minimal required number of terms, counted from the
-#' tail are used for the simulation.
-#' The implementation is based on `fGarch::garchSim`.
+#'
+#' We fix \eqn{p=q=1} for the GARCH model. The implementation is based on `fGarch::garchSim`.
 #' @param object A `garch` object.
-#' @param nsim positive integer. Length of time series to be generated.
-#' @param innov vector of innovations.
-#' @param init_garch numeric vector of starting values for garch process
-#'      used only for burn-in period.
-#' @param init_sigma2 numeric vector of starting values for variance process
-#'      used only for burn-in period.
-#' @inheritParams simults
+#' @inheritParams inn2ts
 #' @return A [tsibble][tsibble::tsibble-package] of class "garch_ts". Column
-#'      "value" corresponds to the simulated time series, "sigma2" and column 
+#'      "ts" corresponds to the simulated time series and column 
 #'      "date" has dummy dates for each observation.
 #' @export
 #' @examples
 #' # simulate from a GARCH(1, 1) model
 #' mdl <- make_garch(omega = 0.5, alpha = 0.1, beta = 0.8)
-#' simults(
+#' inn2ts(
 #'      mdl,
-#'      nsim = 100,
-#'      innov = rnorm(200),
-#'      init_garch = c(0, 0),
-#'      init_sigma2 = c(1, 1)
+#'      inn = rnorm(200)
 #' )
-simults.garch <- function(object, nsim, innov, init_garch, init_sigma2, ...) {
+inn2ts.garch <- function(object, inn, ...) {
     omega <- object$omega
     alpha <- object$alpha
     beta <- object$beta
@@ -60,35 +46,25 @@ simults.garch <- function(object, nsim, innov, init_garch, init_sigma2, ...) {
 
     len_alpha <- vctrs::vec_size(alpha)
     len_beta <- vctrs::vec_size(beta)
-    len_innov <- vctrs::vec_size(innov)
+    len_inn <- vctrs::vec_size(inn)
     # len_ar <- vctrs::vec_size(ar)
     # len_ma <- vctrs::vec_size(ma)
-    m <- min(vctrs::vec_size(init_garch), vctrs::vec_size(init_sigma2)) # length of burn-in
-    if (len_innov <= nsim + m) {
+    # m <- min(vctrs::vec_size(init_garch), vctrs::vec_size(init_sigma2)) # length of burn-in
+    if (len_inn <=  1) {
         rlang::abort(
-            "Length of `innov` insufficient for burn-in and simulation."
+            "Length of `inn` insufficient for recursion"
         )
     }
-    if (m <= max(len_alpha, len_beta)) {
-        rlang::abort(
-            "Number of terms for burn-in is not larger than `alpha` or
-                `beta`."
-        )
-    }
-    # allocate memory for variance and garch
-    y <- c(
-        utils::tail(init_garch, m),
-        rep(NA, times = nsim)
-    )
-    h <- c(
-        utils::tail(init_sigma2, m),
-        rep(NA, times = nsim)
-    )
-    z <- utils::tail(innov, m + nsim)
+    # initialize h and ts
+    h <- rep(NA, times=len_inn)
+    ts <- rep(NA, times=len_inn)
+    eps <- rep(NA, times=len_inn)
     deltainv <- 1 / delta
     # Iterate GARCH / APARCH Model:
-    eps <- h^deltainv * z # calculate burn-in values
-    for (i in (m + 1):(m + nsim)) {
+    h[1] <- omega/(1-alpha-beta)
+    ts[1] <- omega/(1-alpha)
+    eps[1] <- h[1]^deltainv * inn[1]
+    for (i in 2:len_inn) {
         h[i] <- omega +
             sum(
                 alpha * (
@@ -97,34 +73,32 @@ simults.garch <- function(object, nsim, innov, init_garch, init_sigma2, ...) {
                 )^delta
             ) +
             sum(beta * h[i - (1:len_beta)])
-        eps[i] <- h[i]^deltainv * z[i] # update garch
-        y[i] <-
+        eps[i] <- h[i]^deltainv * inn[i] # update garch
+        ts[i] <-
             # mu +
-            # sum(ar * y[i - (1:len_ar)]) +
+            # sum(ar * ts[i - (1:len_ar)]) +
             # sum(ma * eps[i - (1:len_ma)]) +
             eps[i]
     }
-    # attr(ret, "eps") <- eps
     tsibble::tsibble(
-        date = Sys.Date() + 1:nsim,
-        value = utils::tail(y, nsim),
-        # sigma2 = utils::tail(h, nsim),
+        date = Sys.Date() + 1:len_inn,
+        ts = ts,
         index = date
     ) |>
         tsibble::new_tsibble("garch_ts")
 }
 
 
-#' Fitted residuals for GARCH
+#' Fitted residuals for GARCH(1,1)
 #'
-#' @inheritParams fitted_resid
-#' @param new_data a [tsibble][tsibble::tsibble-package] of univariate
-#'      time series on which residuals are to be calculated.
+#' @inheritParams ts2inn
+#' @param ts a [tsibble][tsibble::tsibble-package] of univariate time series
+#'      observations.
 #' @param ... not used
-#' @return a [tsibble][tsibble::tsibble-package] of fitted residuals of class
-#'      `fitted_resid_ts`.
+#' @return a [tsibble][tsibble::tsibble-package] where column `inn`
+#'      contains the calculated innovations.
 #' @export
-fitted_resid.garch <- function(object, new_data, ...) {
+ts2inn.garch <- function(object, ts, ...) {
     if (!inherits(object, "garch")) rlang::abort("Not garch object.")
     omega <- object$omega
     alpha <- object$alpha
@@ -132,9 +106,9 @@ fitted_resid.garch <- function(object, new_data, ...) {
     delta <- 2
     deltainv <- 1 / delta
 
-    new_data_response_var <- tsibble::measured_vars(new_data)
+    ts_response_var <- tsibble::measured_vars(ts)
     # Extract outcome column
-    y <- new_data[[new_data_response_var]]
+    y <- ts[[ts_response_var]]
     ydelta <- abs(y)^delta
     len_y <- vctrs::vec_size(y)
     vec_c <- ccoef(omega, alpha, beta, len_y)
@@ -144,10 +118,9 @@ fitted_resid.garch <- function(object, new_data, ...) {
         )
     h <- c(vec_c[1], h)
     z <- y / (h^deltainv)
-    new_data |>
+    ts |>
         dplyr::mutate(".resid" = z) |>
-        dplyr::select(-!!new_data_response_var) |>
-        tsibble::new_tsibble(class = "fitted_resid_ts")
+        dplyr::select(-!!ts_response_var)
 }
 
 #' Calculate Recursion Polynomial
