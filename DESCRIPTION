@@ -1,6 +1,6 @@
 Package: rcits
 Title: Recursions for Causal Invertible Time Series
-Version: 0.0.5
+Version: 0.0.5.9000
 Authors@R: 
     person("Leon", "Fernandes", , "leon.fernandes@columbia.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7192-9939"))
