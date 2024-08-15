@@ -2,12 +2,9 @@
 % Please edit documentation in R/simults.R
 \name{fitted_resid}
 \alias{fitted_resid}
-\alias{fitted_resid.default}
 \title{Fitted residuals from registered models}
 \usage{
 fitted_resid(object, ...)
-
-\method{fitted_resid}{default}(object, ...)
 }
 \arguments{
 \item{object}{a registered model. Currently supports objects of class \code{arima}

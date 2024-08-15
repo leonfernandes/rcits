@@ -2,12 +2,9 @@
 % Please edit documentation in R/simults.R
 \name{simults}
 \alias{simults}
-\alias{simults.default}
 \title{Simulate from registered models}
 \usage{
 simults(object, ...)
-
-\method{simults}{default}(object, ...)
 }
 \arguments{
 \item{object}{model from which to simulate. Currently supports objects of
