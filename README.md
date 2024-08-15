@@ -28,28 +28,31 @@ pak::pkg_install("leonfernandes/simults")
 
 ## Simulate Data
 
-Currently this package supports ARIMA and GARCH time series models from
-the *smpspltools* package. Burn-in is done implicitly where sufficient
-innovations are assumed to be supplied.
+We demonstrate how to simulate an AR(1) below.
 
 ``` r
 library(simults)
-library(smpspltools)
 # simulate from an AR(1) model
-mdl <- make_arima(phi = 0.3, theta = 0, delta = 0)
-simults(mdl, nsim = 100, innov = rnorm(200))
-#> # A tsibble: 100 x 2 [1D]
-#>    date         value
-#>    <date>       <dbl>
-#>  1 2023-10-03  1.87  
-#>  2 2023-10-04 -0.253 
-#>  3 2023-10-05 -0.208 
-#>  4 2023-10-06 -1.60  
-#>  5 2023-10-07 -0.722 
-#>  6 2023-10-08  1.05  
-#>  7 2023-10-09  1.22  
-#>  8 2023-10-10 -0.0600
-#>  9 2023-10-11 -0.349 
-#> 10 2023-10-12  0.987 
-#> # ℹ 90 more rows
+mdl <- make_arima(phi=0.3, theta=0, delta=0)
+x <- simults(mdl, nsim=100, innov=rnorm(200))
+plot(x, type='l', main="Simulated AR(1)")
 ```
+
+<img src="man/figures/README-sim-ar1-1.png" width="100%" /> Currently
+this package supports ARIMA and GARCH time series models from the
+*smpspltools* package. Burn-in is done implicitly where sufficient
+innovations are assumed to be supplied.
+
+## Fitted Residuals
+
+Fit an AR(1) model on first half of the data and compute residuals on
+all the data.
+
+``` r
+phi_hat <- stats::ar(x$value[1:50], order.max=1)$ar
+fit_mdl <- make_arima(phi=phi_hat, theta=0, delta=0)
+z <- fitted_resid(fit_mdl, x)
+plot(z, type='l', main="Fitted residuals from AR(1)")
+```
+
+<img src="man/figures/README-fitted-plot-1.png" width="100%" />
